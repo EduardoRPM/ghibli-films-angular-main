@@ -1,6 +1,11 @@
 <img src="{{film().image}}" alt="{{film().title}}" />
 <div class="film-card-content" [class.selected]="isSelected()">
-    <h2>{{film().title}}</h2>
+<!-- Make the image and title link to the detail page for this film -->
+<a [routerLink]="['/film', film().id]">
+    <img src="{{film().image}}" alt="{{film().title}}" />
+</a>
+<div class="film-card-content" [class.selected]="isSelected()">
+        <h2><a [routerLink]="['/film', film().id]">{{film().title}}</a></h2>
     <p>{{film().description}}</p>
     <!-- <a href="{{film().url}}" target="_blank">Más info</a> -->
     <button (click)="onSelect()">{{ isSelected() ? "Deseleccionar" :"Seleccionar "}}</button>

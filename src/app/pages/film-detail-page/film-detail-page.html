@@ -1,5 +1,12 @@
-<p>
-  <a href="https://www.youtube.com/watch?v=F5tSoaJ93ac&list=RDF5tSoaJ93ac&start_radio=1" target="_blank">
-    Imagine Dragons & JID - Enemy (de la serie League of Legends: Arcane) | Vídeo musical oficial
-  </a>
-</p>
+<!-- Detail view: show the selected film from the FilmsServices.selectedFilm signal -->
+<div *ngIf="selectedFilm; else loading">
+  <article class="film-detail">
+    <h1>{{ selectedFilm.title }}</h1>
+    <img [src]="selectedFilm.image" [alt]="selectedFilm.title" />
+    <p>{{ selectedFilm.description }}</p>
+    <p><a [href]="selectedFilm.url" target="_blank">Más información</a></p>
+  </article>
+</div>
+<ng-template #loading>
+  <p>Cargando detalles de la película...</p>
+</ng-template>
