@@ -1,0 +1,18 @@
+p a {
+  color: #1e88e5;          /* azul agradable */
+  text-decoration: none;   /* quita el subrayado */
+  font-weight: 600;        /* lo hace un poco más grueso */
+  font-size: 1.1rem;       /* lo hace un poco más grande */
+  transition: color 0.3s, transform 0.2s;
+}
+
+p a:hover {
+  color: #1565c0;          /* azul más oscuro al pasar el mouse */
+  text-decoration: underline;
+  transform: translateY(-2px); /* pequeño “salto” */
+}
+
+p a:active {
+  color: #0d47a1;          /* aún más oscuro al hacer clic */
+  transform: translateY(0);
+}

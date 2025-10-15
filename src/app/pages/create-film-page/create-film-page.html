@@ -1,0 +1,31 @@
+<div class="films-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="film-form">
+    <h2>Agregar nueva película</h2>
+ 
+    <div class="form-group">
+      <label for="title">Título</label>
+      <input id="title" formControlName="title" type="text" placeholder="Ej. Mi película favorita"  />
+    </div>
+ 
+    <div class="form-group">
+      <label for="image">URL de imagen</label>
+      <input id="image" formControlName="image" type="url" placeholder="https://ejemplo.com/poster.jpg"  />
+    </div>
+ 
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <textarea id="description" formControlName="description" rows="3" placeholder="Breve descripción..." ></textarea>
+    </div>
+ 
+    <div class="form-group">
+      <label for="url">Enlace (más info)</label>
+      <input id="url" formControlName="url" type="url" placeholder="https://ejemplo.com"  />
+    </div>
+ 
+    <button type="submit">Agregar Película</button>
+    @if (!form.valid && formSubmitted()) {
+        <span class="error">Datos inválidos</span>
+    }
+    
+  </form>
+</div>

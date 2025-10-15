@@ -1,0 +1,14 @@
+<app-button-actions
+  (eliminarTodos)="eliminarTodos()"
+  (recargar)="recargar()"
+  (ordenar)="ordenarPorNombre()"
+  (invertir)="invertirElementos()">
+</app-button-actions>
+
+<div class="films-grid">
+  @for (film of films(); track film.id) {
+    <app-film-card [film]="film" (deleteFilm)="deleteFilm($event)"></app-film-card>
+  } @empty {
+    <p>No hay películas</p>
+  }
+</div>
