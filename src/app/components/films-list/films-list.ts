@@ -1,53 +1,51 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Film } from '../../interfaces/film.interface';
 import { FilmCard } from '../film-card/film-card';
 import { AppButtonActions } from '../app-button-actions/app-button-actions';
+import { FilmsServices } from '../../services/films-services';
 
 @Component({
   selector: 'app-films-list',
   standalone: true,
-  imports: [HttpClientModule, FilmCard, AppButtonActions],
+  imports: [FilmCard, AppButtonActions],
   templateUrl: './films-list.html',
   styleUrls: ['./films-list.css']
 })
 export class FilmsList {
-  films: WritableSignal<Film[]> = signal([]);
-  private filmsBackup: Film[] = [];
 
-  constructor(private http: HttpClient) {
-    this.http.get<Film[]>('https://ghibliapi.vercel.app/films').subscribe({
-      next: (data) => {
-        console.log('Films fetched:', data.length);
-        this.films.set(data);
-        this.filmsBackup = data;
-      },
-      error: (error) => {
-        console.error('Error fetching films:', error);
-      }
-    });
+  filmServices = inject(FilmsServices);
+   
+  constructor() {
+    if (this.filmServices.films().length === 0) {
+      this.filmServices.fetchFilms();
+    }
+  } // fetch films on component init 
+
+
+  get films(){
+    return this.filmServices.films();
   }
 
   deleteFilm(id: string) {
     console.log(`Eliminando película con ID: ${id}... desde el componente padre`);
-    this.films.update(arr => arr.filter(f => f.id !== id));
+    this.filmServices.deleteById(id);
   }
 
   // === Métodos para los 4 botones ===
   eliminarTodos() {
-    this.films.set([]);
+    this.filmServices.clearAll();
   }
 
   recargar() {
-
-    this.films.set([...this.filmsBackup]);
+    this.filmServices.restoreFromBackup();
   }
 
   ordenarPorNombre() {
-    this.films.update(arr => [...arr].sort((a, b) => a.title.localeCompare(b.title)));
+    this.filmServices.sortByName();
   }
 
   invertirElementos() {
-    this.films.update(arr => [...arr].reverse());
+    this.filmServices.reverseOrder();
   }
 }

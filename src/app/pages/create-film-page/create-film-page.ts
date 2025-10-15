@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FilmCard } from '../../components/film-card/film-card';
+import { FilmsServices } from '../../services/films-services';
 
 @Component({
   selector: 'app-create-film-page',
@@ -10,6 +11,7 @@ import { FilmCard } from '../../components/film-card/film-card';
 })
 export class CreateFilmPage {
 
+  private filmServices = inject(FilmsServices);
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
     image: new FormControl('', [Validators.required]),
@@ -25,11 +27,15 @@ export class CreateFilmPage {
       console.log('Formulario válido, datos enviados:', this.form.value);
 
       const film = {
-        title: this.form.value.title ?? '',
-        image: this.form.value.image ?? '',
         description: this.form.value.description ?? '',
-        url: this.form.value.url ?? ''
+        image: this.form.value.image ?? '',
+        title: this.form.value.title ?? '',
+        url: this.form.value.url ?? '',
+        id: "",
+
       };
+      console.log('Film creado:', film);
+      this.filmServices.createFilm(film);
       this.form.reset();
       this.formSubmitted.set(false);
       

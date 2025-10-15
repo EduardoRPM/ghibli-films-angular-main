@@ -6,7 +6,7 @@
 </app-button-actions>
 
 <div class="films-grid">
-  @for (film of films(); track film.id) {
+  @for (film of films; track film.id) {
     <app-film-card [film]="film" (deleteFilm)="deleteFilm($event)"></app-film-card>
   } @empty {
     <p>No hay películas</p>
