@@ -16,7 +16,7 @@ export class FilmsServices {
   filmsBackup: Film[] = [];
 
   fetchFilms() {
-    this.http.get<Film[]>('https://ghibliapi.vercel.app/films').subscribe(
+    this.http.get<Film[]>('http://localhost:8080/films').subscribe(
       {
         next: (data: Film[]) => {
           console.log('Films fetched:', data.length);
